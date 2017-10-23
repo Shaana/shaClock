@@ -1,0 +1,46 @@
+# simple single screen X server config with fake CRT attached
+# use .format(path_to_edid_file, pci_slot)
+
+Section "ServerLayout"
+    Identifier     "Layout0"
+    Screen      0  "Screen0"     0    0
+EndSection
+
+Section "Screen"
+    Identifier     "Screen0"
+    Device         "VideoCard0"
+    Monitor        "Monitor0"
+    DefaultDepth   24
+    Option         "UseDisplayDevice" "DFP-0"
+    Option         "ConnectedMonitor" "DFP-0"
+    Option         "CustomEDID" "DFP-0:{0}"
+    Option         "Coolbits" "31"
+    Option "AllowEmptyInitialConfiguration" "on"
+    SubSection "Display"
+        Depth   24
+        Modes   "1024x768"
+    EndSubSection
+EndSection
+
+Section "ServerFlags"
+    Option         "AllowEmptyInput" "on"
+    Option         "Xinerama"        "off"
+    Option         "SELinux"         "off"
+EndSection
+
+Section "Device"
+	Identifier  "Videocard0"
+	Driver      "nvidia"
+    Screen      0
+    Option      "UseDisplayDevice" "DFP-0"
+    Option      "ConnectedMonitor" "DFP-0"
+    Option      "CustomEDID" "DFP-0:{0}"
+    Option      "Coolbits" "31"
+    BusID       "PCI:{1}"
+EndSection
+
+Section "Monitor"
+    Identifier      "Monitor0"
+    Vendorname      "Dummy Display"
+    Modelname       "1024x768"
+EndSection
