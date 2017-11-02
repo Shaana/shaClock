@@ -220,6 +220,13 @@ class Nvidia(object):
         else:
             print("[!] Invalid power setting")
 
+        # set performance level (only works on 9xx GPUS)
+        if "p_state" in cfg:
+            #print("[*] Setting P state {}")
+            exitcode, output = subprocess.getstatusoutput("nvidia-smi -i {0} -ac {1}".format(gpu.index, cfg["p_state"]))
+
+            if exitcode != 0:
+                print("[!] Failed to set P state")
 
         # set fan speed and memory/clock offset
         q = ""
